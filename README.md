@@ -1,9 +1,13 @@
 # EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD
 
 ## Aim: 
-To Interface a 4X4 matrix keypad and show the output on 16X2 LCD display to ARM controller , and simulate it in Proteus
+
+To Interface a 4X4 matrix keypad and show the output on 16X2 LCD display to ARM controller , and simulate it in Proteus.
+
 ## Components required: 
+
 STM32 CUBE IDE, Proteus 8 simulator .
+
 ## Theory:
 
 ![image](https://github.com/vasanthkumarch/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/36288975/2a4a795e-1674-4329-ae07-3f5e8d5073e2)
@@ -25,7 +29,9 @@ Pin Number	Pin Name	Description
 These Keypad modules are made of thin, flexible membrane material. The 4 x4 keypad module consists of 16 keys, these Keys are organized in a matrix of rows and columns. All these switches are connected to each other with a conductive trace. Normally there is no connection between rows and columns. When we will press a key, then a row and a column make contact.
 
 ## Procedure : 
+
  ## LCD 16X2 
+ 
    16×2 LCD is named so because; it has 16 Columns and 2 Rows. There are a lot of combinations available like,
    8×1, 8×2, 10×2, 16×1, etc. But the most used one is the 16*2 LCD, hence we are using it here.
 
@@ -124,6 +130,7 @@ C2
 Jump to second line, position 2
  
 ## Procedure:
+
  1. click on STM 32 CUBE IDE, the following screen will appear 
  ![image](https://user-images.githubusercontent.com/36288975/226189166-ac10578c-c059-40e7-8b80-9f84f64bf088.png)
 
@@ -177,18 +184,173 @@ https://engineeringxpert.com/wp-content/uploads/2022/04/26.png
 
 ![image](https://user-images.githubusercontent.com/36288975/233856904-99eb708a-c907-4595-9025-c9dbd89b8879.png)
 
-## CIRCUIT DIAGRAM 
- 
+## CIRCUIT DIAGRAM:
+
+ ![expt 5 1(1)](https://github.com/22008686/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/118916413/81e911c5-7fb1-49fe-af06-24df714dd5a0)
 
 ## STM 32 CUBE PROGRAM :
 
+```
+#include "main.h"
+#include"stdbool.h"
+#include"lcd.h"
+bool col1,col2,col3,col4;
+void key();
+  while (1)
+  {
+	  key();
+	  HAL_Delay(1000);
+  }
+void key(){
+	  Lcd_PortType ports[]={GPIOA,GPIOA,GPIOA,GPIOA};
+	  	  Lcd_PinType pins[]={GPIO_PIN_3,GPIO_PIN_2,GPIO_PIN_1,GPIO_PIN_0};
+	  	  Lcd_HandleTypeDef lcd;
+ lcd=Lcd_create(ports,pins,GPIOB,GPIO_PIN_0,GPIOB,GPIO_PIN_1,LCD_4_BIT_MODE);
+HAL_GPIO_WritePin(GPIOC,GPIO_PIN_0,GPIO_PIN_RESET);
+HAL_GPIO_WritePin(GPIOC,GPIO_PIN_1,GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOC,GPIO_PIN_2,GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOC,GPIO_PIN_3,GPIO_PIN_SET);
+col1=HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_4);
+col2=HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_5);
+col3=HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_6);
+col4=HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_7);
 
+if(!col1){
+Lcd_cursor(&lcd,0,1);
+Lcd_string(&lcd,"key 7 pressed");
+col1=1;
+}
+else if(!col2){
+Lcd_cursor(&lcd,0,1);
+Lcd_string(&lcd,"key 8 pressed");
+col2=1;
+ }
+ else if(!col3){
+Lcd_cursor(&lcd,0,1);
+Lcd_string(&lcd,"key 9 pressed");
+col3=1;
+}
+else if(!col4){
+Lcd_cursor(&lcd,0,1);
+Lcd_string(&lcd,"key / pressed");
+col4=1;
+ }
 
+HAL_Delay(500);
+HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);
+HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
+
+col1 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_4);
+col2 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5);
+col3 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6);
+col4 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7);
+ if(!col1)
+{
+Lcd_cursor(&lcd, 0,1);
+Lcd_string(&lcd, "key 4 pressed");
+col1=1;
+}
+else if(!col2)
+{
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key 5 pressed");
+  col2=1;
+ }
+ else if(!col3)
+ {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key 6 pressed");
+ col3=1;
+ }
+  else if(!col4)
+ {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key X pressed");
+  col4=1;
+ }
+  HAL_Delay(500);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
+  col1 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_4);
+  col2 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5);
+  col3 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6);
+  col4 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7);
+  if(!col1)
+  {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key 1 pressed");
+  col1=1;
+  }
+  else if(!col2)
+  {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key 2 pressed");
+  col2=1;
+  }
+ else if(!col3)
+ {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key 3 pressed");
+  col3=1;
+  }
+  else if(!col4)
+  {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key - pressed");
+  col4=1;
+  }
+  HAL_Delay(500);
+ HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET);
+ HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);
+ HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);
+ HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
+ col1 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_4);
+ col2 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5);
+ col3 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6);
+  col4 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7);
+ if(!col1)
+ {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key ON pressed");
+  col1=1;
+  }
+ else if(!col2)
+ {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key 0 pressed");
+  col2=1;
+ }
+ else if(!col3)
+ {
+ Lcd_cursor(&lcd, 0,1);
+ Lcd_string(&lcd, "key = pressed");
+  col3=1;
+  }
+  else if(!col4)
+  {
+  Lcd_cursor(&lcd, 0,1);
+  Lcd_string(&lcd, "key + pressed");
+  col4=1;
+  }
+  else{
+            Lcd_cursor(&lcd,0,1);
+           Lcd_string(&lcd,"no key pressed");
+	  HAL_Delay(500);
+  }
+}
+```
 ## Output screen shots of proteus  :
- 
- 
+
+ ![expt 5 2(2)](https://github.com/22008686/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/118916413/0ece8afb-4d89-4d27-a96e-9ddea6d2d6f9)
+
  ## CIRCUIT DIAGRAM (EXPORT THE GRAPHICS TO PDF AND ADD THE SCREEN SHOT HERE): 
  
- 
+ ![expt 5 3(3)](https://github.com/22008686/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/118916413/ab8211cd-1582-41fe-9262-15c5e960e463)
+
 ## Result :
+
 Interfacing a 4x4 keypad with ARM microcontroller are simulated in proteus and the results are verified.
