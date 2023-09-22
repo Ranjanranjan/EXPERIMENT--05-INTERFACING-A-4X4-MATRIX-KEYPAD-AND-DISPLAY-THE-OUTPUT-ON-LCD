@@ -1,9 +1,9 @@
 # EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD
 
 ## Aim: 
-To Interface a 4X4 matrix keypad and show the output on 16X2 LCD display to ARM controller , and simulate it in Proteus.
+      To Interface a 4X4 matrix keypad and show the output on 16X2 LCD display to ARM controller , and simulate it in Proteus.
 ## Components required: 
-STM32 CUBE IDE, Proteus 8 simulator .
+      STM32 CUBE IDE, Proteus 8 simulator .
 ## Theory:
 ![image](https://github.com/vasanthkumarch/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/36288975/2a4a795e-1674-4329-ae07-3f5e8d5073e2)
 
@@ -180,6 +180,10 @@ https://engineeringxpert.com/wp-content/uploads/2022/04/26.png
  ![expt 5 1(1)](https://github.com/22008686/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/118916413/81e911c5-7fb1-49fe-af06-24df714dd5a0)
 ## STM 32 CUBE PROGRAM :
 ```
+Roll no.  : 212222230116
+Name      : Ranjan K
+
+
 #include "main.h"
 #include"stdbool.h"
 #include"lcd.h"
